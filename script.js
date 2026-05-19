@@ -27,7 +27,7 @@ fetch('./Table_Input.csv')
     }
 
     document.getElementById('alpha').innerText =
-      values['A5'] + values['A20'];
+  values['A5'] + values['A20'];
 
     document.getElementById('beta').innerText =
       values['A15'] / values['A7'];
