@@ -12,9 +12,11 @@ fetch('Table_Input.csv')
 
       const cols = rows[i].split(',');
 
-      const index = cols[0].trim();
+      const index = cols[0].replace(/"/g, '').trim();
 
-      const value = Number(cols[1].replace(/"/g, '').trim());
+      const value = Number(
+        cols[1].replace(/"/g, '').trim()
+      );
 
       values[index] = value;
 
@@ -22,76 +24,79 @@ fetch('Table_Input.csv')
 
       tr.innerHTML = `
         <td>${index}</td>
-        <td>${value}</td>
+        <td class="editable">${value}</td>
       `;
 
       tableBody.appendChild(tr);
     }
 
-  
-    const alpha = values['A5'] + values['A20'];
-    const beta = values['A15'] / values['A7'];
-    const charlie = values['A13'] * values['A12'];
+    updateTable2(values);
 
-    document.getElementById('alpha').textContent = alpha;
-    document.getElementById('beta').textContent = beta;
-    document.getElementById('charlie').textContent = charlie;
-  })
-  .catch(error => {
-    console.error('Error loading CSV:', error);
-  });
+    document.querySelectorAll('.editable').forEach(cell => {
 
-document.addEventListener('click', function(e) {
+      cell.addEventListener('click', function () {
 
-  if (e.target.tagName === 'TD' && e.target.cellIndex === 1) {
+        // Prevent multiple inputs
+        if (this.querySelector('input')) return;
 
-    const currentValue = e.target.innerText;
+        const oldValue = this.innerText;
 
-    const input = document.createElement('input');
+        const input = document.createElement('input');
 
-    input.type = 'number';
-    input.value = currentValue;
+        input.type = 'number';
+        input.value = oldValue;
 
-    input.style.width = '80px';
-    input.style.padding = '5px';
-    input.style.borderRadius = '8px';
-    input.style.border = 'none';
+        input.style.width = '80px';
+        input.style.padding = '8px';
+        input.style.borderRadius = '8px';
+        input.style.border = 'none';
+        input.style.textAlign = 'center';
 
-    e.target.innerHTML = '';
-    e.target.appendChild(input);
+        this.innerHTML = '';
+        this.appendChild(input);
 
-    input.focus();
+        input.focus();
 
-    input.addEventListener('blur', () => {
+        input.addEventListener('blur', () => {
 
-      e.target.innerHTML = input.value;
+          const newValue = Number(input.value);
 
-      updateTable2();
+          this.innerHTML = newValue;
+
+          values = {};
+
+          document.querySelectorAll('#table1 tbody tr')
+            .forEach(row => {
+
+              const key = row.cells[0].innerText;
+
+              const val = Number(row.cells[1].innerText);
+
+              values[key] = val;
+            });
+
+          updateTable2(values);
+        });
+      });
     });
-  }
-});
+  })
 
-function updateTable2() {
-
-  const rows = document.querySelectorAll('#table1 tbody tr');
-
-  let values = {};
-
-  rows.forEach(row => {
-
-    const index = row.cells[0].innerText;
-
-    const value = Number(row.cells[1].innerText);
-
-    values[index] = value;
+  .catch(error => {
+    console.error('CSV Loading Error:', error);
   });
 
-  document.getElementById('alpha').textContent =
-    values['A5'] + values['A20'];
 
-  document.getElementById('beta').textContent =
-    values['A15'] / values['A7'];
+function updateTable2(values) {
 
-  document.getElementById('charlie').textContent =
-    values['A13'] * values['A12'];
+  const alpha = values['A5'] + values['A20'];
+
+  const beta = values['A15'] / values['A7'];
+
+  const charlie = values['A13'] * values['A12'];
+
+  document.getElementById('alpha').textContent = alpha;
+
+  document.getElementById('beta').textContent = beta;
+
+  document.getElementById('charlie').textContent = charlie;
 }
