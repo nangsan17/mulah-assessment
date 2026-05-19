@@ -2,15 +2,18 @@ fetch('Table_Input.csv')
   .then(response => response.text())
   .then(data => {
 
-    const rows = data.trim().split('\n');
-
     const tableBody = document.querySelector('#table1 tbody');
 
     let values = {};
 
+    // Split rows properly
+    const rows = data.trim().split(/\r?\n/);
+
+    // Skip header
     for (let i = 1; i < rows.length; i++) {
 
-      const cols = rows[i].split(',');
+      // Support comma or semicolon CSV
+      const cols = rows[i].split(/,|;/);
 
       const index = cols[0].replace(/"/g, '').trim();
 
@@ -32,11 +35,11 @@ fetch('Table_Input.csv')
 
     updateTable2(values);
 
+    // Editable cells
     document.querySelectorAll('.editable').forEach(cell => {
 
       cell.addEventListener('click', function () {
 
-        // Prevent multiple inputs
         if (this.querySelector('input')) return;
 
         const oldValue = this.innerText;
@@ -59,10 +62,9 @@ fetch('Table_Input.csv')
 
         input.addEventListener('blur', () => {
 
-          const newValue = Number(input.value);
+          this.innerHTML = input.value;
 
-          this.innerHTML = newValue;
-
+          // Rebuild values object
           values = {};
 
           document.querySelectorAll('#table1 tbody tr')
@@ -82,21 +84,17 @@ fetch('Table_Input.csv')
   })
 
   .catch(error => {
-    console.error('CSV Loading Error:', error);
+    console.error(error);
   });
-
 
 function updateTable2(values) {
 
-  const alpha = values['A5'] + values['A20'];
+  document.getElementById('alpha').textContent =
+    (values['A5'] || 0) + (values['A20'] || 0);
 
-  const beta = values['A15'] / values['A7'];
+  document.getElementById('beta').textContent =
+    ((values['A15'] || 0) / (values['A7'] || 1)).toFixed(2);
 
-  const charlie = values['A13'] * values['A12'];
-
-  document.getElementById('alpha').textContent = alpha;
-
-  document.getElementById('beta').textContent = beta;
-
-  document.getElementById('charlie').textContent = charlie;
+  document.getElementById('charlie').textContent =
+    (values['A13'] || 0) * (values['A12'] || 0);
 }
