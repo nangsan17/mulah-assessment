@@ -118,3 +118,15 @@ input {
   text-align: center;
   font-size: 16px;
 }
+
+td {
+  color: white;
+}
+
+th {
+  color: white;
+}
+
+#table1 td {
+  font-weight: 500;
+}
