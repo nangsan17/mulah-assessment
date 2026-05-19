@@ -81,3 +81,40 @@ tbody tr:nth-child(even) {
     padding: 12px;
   }
 }
+
+table {
+  animation: fadeUp 1s ease;
+}
+
+h1 {
+  animation: slideLeft 0.8s ease;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+input {
+  text-align: center;
+  font-size: 16px;
+}
