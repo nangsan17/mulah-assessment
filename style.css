@@ -8,86 +8,77 @@
 
 body {
   font-family: 'Poppins', sans-serif;
-  min-height: 100vh;
   background: linear-gradient(135deg, #141e30, #243b55);
-  padding: 40px 20px;
+  min-height: 100vh;
+  padding: 50px;
   color: white;
 }
 
 .container {
-  max-width: 900px;
+  max-width: 1100px;
   margin: auto;
 }
 
 h1 {
-  margin: 40px 0 20px;
-  font-size: 42px;
+  font-size: 64px;
+  margin-bottom: 30px;
+  margin-top: 50px;
   font-weight: 700;
-  letter-spacing: 1px;
+  animation: slideLeft 0.8s ease;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 50px;
+  margin-bottom: 60px;
   overflow: hidden;
-  border-radius: 18px;
-  backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-}
-
-th {
-  background: rgba(255, 255, 255, 0.12);
-  padding: 18px;
-  font-size: 20px;
-  font-weight: 600;
-}
-
-td {
-  padding: 16px;
-  text-align: center;
-  font-size: 18px;
-  border-top: 1px solid rgba(255,255,255,0.1);
-}
-
-tr {
-  transition: 0.3s ease;
-}
-
-tr:hover {
+  border-radius: 25px;
   background: rgba(255,255,255,0.08);
-  transform: scale(1.01);
-}
-
-tbody tr:nth-child(even) {
-  background: rgba(255,255,255,0.03);
-}
-
-#table2 td:last-child {
-  font-weight: bold;
-  color: #00ffb3;
-}
-
-@media (max-width: 768px) {
-
-  h1 {
-    font-size: 32px;
-  }
-
-  th,
-  td {
-    font-size: 16px;
-    padding: 12px;
-  }
-}
-
-table {
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.35);
   animation: fadeUp 1s ease;
 }
 
-h1 {
-  animation: slideLeft 0.8s ease;
+th {
+  background: rgba(255,255,255,0.12);
+  padding: 22px;
+  font-size: 32px;
+  color: white;
+  text-align: center;
+}
+
+td {
+  padding: 22px;
+  text-align: center;
+  font-size: 28px;
+  color: white !important;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+tbody tr:nth-child(even) {
+  background: rgba(255,255,255,0.04);
+}
+
+tbody tr:hover {
+  background: rgba(255,255,255,0.08);
+  transition: 0.3s ease;
+}
+
+#table2 td:last-child {
+  color: #00ffb3 !important;
+  font-weight: bold;
+}
+
+.editable {
+  cursor: pointer;
+}
+
+input {
+  text-align: center;
+  font-size: 18px;
+  padding: 8px;
+  border-radius: 10px;
+  border: none;
 }
 
 @keyframes fadeUp {
@@ -112,21 +103,4 @@ h1 {
     opacity: 1;
     transform: translateX(0);
   }
-}
-
-input {
-  text-align: center;
-  font-size: 16px;
-}
-
-td {
-  color: white;
-}
-
-th {
-  color: white;
-}
-
-#table1 td {
-  font-weight: 500;
 }
